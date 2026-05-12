@@ -136,6 +136,12 @@ def _parse_base(s: str, today: date) -> date:
     iso = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})", s)
     if iso:
         return date(int(iso.group(1)), int(iso.group(2)), int(iso.group(3)))
+    m = re.fullmatch(r"(\d{4})/(\d{1,2})/(\d{1,2})", s)
+    if m:
+        return date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    m = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", s)
+    if m:
+        return date(int(m.group(3)), int(m.group(1)), int(m.group(2)))
     m = re.fullmatch(
         rf"({_MONTHS})\s+(\d+)(?:st|nd|rd|th)?(?:[,\s]+(\d{{4}}))?",
         s,
@@ -144,6 +150,16 @@ def _parse_base(s: str, today: date) -> date:
     if m:
         month = MONTH_MAP[m.group(1).lower()]
         day = int(m.group(2))
+        year = int(m.group(3)) if m.group(3) else today.year
+        return date(year, month, day)
+    m = re.fullmatch(
+        rf"(?:the\s+)?(\d+)(?:st|nd|rd|th)\s+of\s+({_MONTHS})(?:\s+(\d{{4}}))?",
+        s,
+        re.IGNORECASE,
+    )
+    if m:
+        day = int(m.group(1))
+        month = MONTH_MAP[m.group(2).lower()]
         year = int(m.group(3)) if m.group(3) else today.year
         return date(year, month, day)
     raise ValueError(f"Cannot parse date expression: {s!r}")
