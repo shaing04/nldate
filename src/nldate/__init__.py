@@ -86,10 +86,12 @@ _ONES_STR = r"nine|eight|seven|six|five|four|three|two|one"
 _SMALL_STR = r"nineteen|eighteen|seventeen|sixteen|fifteen|fourteen|thirteen|twelve|eleven|ten|nine|eight|seven|six|five|four|three|two|one|zero"
 _TENS_STR = r"ninety|eighty|seventy|sixty|fifty|forty|thirty|twenty"
 _WORD_NUM = rf"(?:{_TENS_STR})(?:-(?:{_ONES_STR}))?|(?:{_SMALL_STR})"
-_NUM = rf"(?:\d+|{_WORD_NUM})"
+_NUM = rf"(?:\d+|{_WORD_NUM}|an?)"
 
 
 def _to_int(s: str) -> int:
+    if s in ("a", "an"):
+        return 1
     if re.fullmatch(r"\d+", s):
         return int(s)
     parts = s.split("-")
