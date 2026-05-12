@@ -185,6 +185,8 @@ def parse(s: str, today: date | None = None) -> date:
         return today - timedelta(days=1)
     if t == "the day after tomorrow":
         return today + timedelta(days=2)
+    if t == "the day before yesterday":
+        return today - timedelta(days=2)
     if t == "next week":
         return today + timedelta(weeks=1)
 
@@ -209,7 +211,9 @@ def parse(s: str, today: date | None = None) -> date:
     if m:
         return _prev_weekday(today, WEEKDAY_MAP[m.group(1)])
 
-    m = re.fullmatch(rf"({_NUM}) years?(?:\s+and\s+|,\s*)({_NUM}) months? (before|after) (.+)", t)
+    m = re.fullmatch(
+        rf"({_NUM}) years?(?:\s+and\s+|,\s*)({_NUM}) months? (before|after) (.+)", t
+    )
     if m:
         base = _parse_base(m.group(4), today)
         total = _to_int(m.group(1)) * 12 + _to_int(m.group(2))

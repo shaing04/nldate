@@ -82,3 +82,7 @@ def test_18():
 
 def test_19():
     assert parse("2 years, 3 months before Dec. 1, 2025") == date(2023, 9, 1)
+
+
+def test_20():
+    assert parse("the day before yesterday", today=fake_today) == date(2025, 5, 9)
