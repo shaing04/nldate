@@ -78,3 +78,7 @@ def test_17():
 
 def test_18():
     assert parse("3 days from 2025-12-04") == date(2025, 12, 7)
+
+
+def test_19():
+    assert parse("2 years, 3 months before Dec. 1, 2025") == date(2023, 9, 1)
