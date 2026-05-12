@@ -80,7 +80,7 @@ WEEKDAY_MAP: dict[str, int] = {
 
 _MONTHS = "|".join(sorted(MONTH_MAP, key=len, reverse=True))
 _WEEKDAYS = "|".join(sorted(WEEKDAY_MAP, key=len, reverse=True))
-_UNITS = r"months?|weeks?|days?"
+_UNITS = r"years?|months?|weeks?|days?"
 
 _ONES_STR = r"nine|eight|seven|six|five|four|three|two|one"
 _SMALL_STR = r"nineteen|eighteen|seventeen|sixteen|fifteen|fourteen|thirteen|twelve|eleven|ten|nine|eight|seven|six|five|four|three|two|one|zero"
@@ -122,6 +122,8 @@ def _apply_offset(base: date, n: int, unit: str, sign: int) -> date:
         return base + timedelta(days=sign * n)
     if u == "week":
         return base + timedelta(weeks=sign * n)
+    if u == "year":
+        return _add_months(base, sign * n * 12)
     return _add_months(base, sign * n)
 
 
