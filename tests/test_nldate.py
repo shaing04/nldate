@@ -70,3 +70,11 @@ def test_15():
 
 def test_16():
     assert parse("next Monday", today=fake_today) == date(2025, 5, 12)
+
+
+def test_17():
+    assert parse("2025-12-04") == date(2025, 12, 4)
+
+
+def test_18():
+    assert parse("3 days from 2025-12-04") == date(2025, 12, 7)

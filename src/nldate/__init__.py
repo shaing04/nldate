@@ -133,6 +133,9 @@ def _parse_base(s: str, today: date) -> date:
         return today + timedelta(days=1)
     if s == "yesterday":
         return today - timedelta(days=1)
+    iso = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})", s)
+    if iso:
+        return date(int(iso.group(1)), int(iso.group(2)), int(iso.group(3)))
     m = re.fullmatch(
         rf"({_MONTHS})\s+(\d+)(?:st|nd|rd|th)?(?:[,\s]+(\d{{4}}))?",
         s,
@@ -151,6 +154,10 @@ def parse(s: str, today: date | None = None) -> date:
         today = date.today()
 
     t = s.strip().lower()
+
+    iso = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})", t)
+    if iso:
+        return date(int(iso.group(1)), int(iso.group(2)), int(iso.group(3)))
 
     if t == "today":
         return today
