@@ -108,8 +108,6 @@ def _add_months(d: date, n: int) -> date:
 
 def _next_weekday(ref: date, target: int) -> date:
     days = (target - ref.weekday()) % 7 or 7
-    if 1 < days < 7:  # not tomorrow and not same weekday → skip to following week
-        days += 7
     return ref + timedelta(days=days)
 
 

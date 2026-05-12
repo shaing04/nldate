@@ -35,7 +35,7 @@ def test_7():
 
 
 def test_8():
-    assert parse("next Friday", today=fake_today) == date(2025, 5, 23)
+    assert parse("next Friday", today=fake_today) == date(2025, 5, 16)
 
 
 def test_9():
