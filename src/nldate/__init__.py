@@ -143,7 +143,7 @@ def _parse_base(s: str, today: date) -> date:
     if m:
         return date(int(m.group(3)), int(m.group(1)), int(m.group(2)))
     m = re.fullmatch(
-        rf"({_MONTHS})\s+(\d+)(?:st|nd|rd|th)?(?:[,\s]+(\d{{4}}))?",
+        rf"({_MONTHS})\.?\s+(\d+)(?:st|nd|rd|th)?(?:[,\s]+(\d{{4}}))?",
         s,
         re.IGNORECASE,
     )
